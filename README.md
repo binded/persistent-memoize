@@ -18,7 +18,7 @@ npm install --save persistent-memoize
 
 ## Usage
 
-### persistentMemoize(blobStore [, opts])
+### initMemoize(blobStore [, opts])
 
 Returns a **memoize()** function.
 
@@ -103,7 +103,7 @@ globalName/globalVersion/name/version/argumentHash
 ```
 
 Where `globalName` and `globalVersion` are respectively the `opts.name`
-and `opts.version` values passed to `persistentMemoize()`. `name` and
+and `opts.version` values passed to `initMemoize()`. `name` and
 `version` are respectively the `opts.name` and `opts.version` values
 passed to `memoize()` .
 
@@ -120,6 +120,24 @@ which is similar to `JSON.stringify` but more deterministic (e.g. order
 of object keys doesn't matter).
 
 ## Examples
+
+```javascript
+import initMemoize from 'persistent-memoize'
+import initBlobStore from 'fs-blob-store'
+
+const memoize = initMemoize(initBlobStore())
+
+const someSlowFunction = (i) => Promise.resolve(`your number is ${i}`)
+const getValue = memoize(someSlowFunction, 'someSlowFunction')
+
+getValue(2)
+  // caches result in blob store and returns it
+  .then((str) => console.log(str))
+  // now that the result is cached, it will return it from cache
+  .then((str) => console.log(str))
+```
+
+Boilerplate:
 
 ```javascript
 import persistentMemoize from 'persistent-memoize'
@@ -160,7 +178,9 @@ const memoizedCb = memoizeNoVersion((cb) => {
 // Alternative syntax
 const memoizedCb2 = memoize.cb((cb) => { cb() }, 'memoizedCb/v2')
 
-// Sync function
+// Sync function. Be careful when memoizing a sync function as it
+// doesn't create a drop in replacement because the memoised will
+// version be async and returns a promise.
 const expensiveComputation = memoize((i) => {
   // some expensive computation :)
   return i + 1
