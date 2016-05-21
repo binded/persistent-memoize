@@ -57,7 +57,7 @@ test('simple cache miss, cache hit with promise', (t) => {
       return readFile(poemPath).then((data) => data.toString())
     }
     return Promise.resolve('oopsie')
-  }, 'test-1')
+  }, 'test-2')
 
   readPoem()
     .then((val) => {
@@ -67,11 +67,30 @@ test('simple cache miss, cache hit with promise', (t) => {
     .then((val) => {
       t.equal(val, poemData, 'returns cached result')
     })
-    .then(() => {
-      t.end()
+    .then(() => t.end())
+    .catch((err) => t.fail(err))
+})
+
+test('simple cache miss, cache hit with promise that returns buffer', (t) => {
+  let callCount = 0
+  const readPoem = memoize(() => {
+    callCount++
+    if (callCount === 1) {
+      return readFile(poemPath)
+    }
+    return Promise.resolve('oopsie')
+  }, 'test-3')
+
+  readPoem()
+    .then((val) => {
+      t.equal(val.toString(), poemData, 'poem data')
     })
-    .catch((err) => {
-      t.fail(err)
+    .then(() => readPoem())
+    .then((val) => {
+      t.ok(Buffer.isBuffer(val), 'is a buffer')
+      t.equal(val.toString(), poemData, 'returns cached result')
     })
+    .then(() => t.end())
+    .catch((err) => t.fail(err))
 })
 
