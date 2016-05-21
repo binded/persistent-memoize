@@ -13,7 +13,7 @@
     "dev": "nodemon --exec npm -- run test:quick",
     "docker": "docker-compose up -d services",
     "lint": "eslint src/",
-    "postinstall": "npm run build",
+    "release": "npm run build && npm run publish",
     "test": "npm run lint && npm run test:quick",
     "test:quick": "NODE_ENV=test babel-tape-runner test/*.js"
   },
