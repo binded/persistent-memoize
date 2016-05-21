@@ -1,6 +1,6 @@
-# persistent-memoize
-
 WIP
+
+# persistent-memoize
 
 [Memoize](https://en.wikipedia.org/wiki/Memoization) / cache arbitrary
 functions to the local file system, Amazon S3, Google Drive, Google
@@ -117,9 +117,9 @@ globalName/globalVersion/name/version/argumentHash
 ```
 
 Where `globalName` and `globalVersion` are respectively the `opts.name`
-and `opts.version` values passed to `initMemoize()`. `name` and
-`version` are respectively the `opts.name` and `opts.version` values
-passed to `memoize()` .
+and `opts.version` values passed to `initMemoize(store, opts)`. `name` and
+`version` are respectively the `name` argument and `opts.version` value
+passed to `memoize(fn, name, opts)` .
 
 `argumentHash` is, in pseudo code:
 
