@@ -169,6 +169,7 @@ const memoize = persistentMemoize(store)
 const memoizedFetch = memoize((...args) => (
   fetch(...args)
     .then((response) => {
+      // If an error is thrown, the funciton call won't be memoized
       if (!response.ok) throw new Error('oops, problem with request')
       return response.text()
     })
@@ -186,7 +187,7 @@ const memoizedCb = memoizeNoVersion((cb) => {
 const memoizedCb2 = memoize.cb((cb) => { cb() }, 'memoizedCb/v2')
 
 // Sync function. Be careful when memoizing a sync function as it
-// doesn't create a drop in replacement because the memoised will
+// doesn't create a drop in replacement because the memoized will
 // version be async and returns a promise.
 const expensiveComputation = memoize((i) => {
   // some expensive computation :)
