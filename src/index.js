@@ -12,13 +12,6 @@ class NotImplementedError extends Error {}
 const sha1 = (str) => createHash('sha1').update(str).digest('hex')
 const hashArguments = (args) => sha1(jsonStringify(args))
 
-/*
-const isPromise = (val = false) => (
-  typeof val !== 'undefined' && typeof val.then === 'function'
-)
-*/
-
-
 export default (store, {
   prefix = 'persistent-memoize',
   name = process.env.npm_package_name || 'unknown_npm_package_name',
@@ -84,59 +77,5 @@ export default (store, {
 
   memoize.callback = (fn, fnName, opts) => memoize(fn, fnName, { ...opts, cb: true })
 
-  // memoize.callback = (fn, name, opts) => memoize(fn, name, { ...opts, cb: true })
-
   return memoize
 }
-
-/*
-  (fn, fnPrefix = '') => {
-  const computeKey = (args) => {
-    // TODO: make sure all args can be serialized to string?
-    const hash = crypto.createHash('md5')
-      .update(args.join('|'))
-      .digest('hex')
-    return path.join(globalPrefix, fnPrefix, hash)
-  }
-
-  return (...args) => {
-    if (disableCache) {
-      return fn(...args)
-    }
-    // debug('memoized function called')
-    const key = computeKey(args)
-    // debug(`key = ${key}`)
-
-    const passthrough = new PassThrough()
-
-    const handleError = (err) => {
-      debug(`handleError(${err})`)
-      passthrough.emit('error', err)
-    }
-
-    // debug(`store.exists(${key})`)
-    store.exists({ key }, (err, exists) => {
-      if (err) return handleError(err)
-      if (exists) {
-        debug(`cache hit (${key})`)
-        const cacheReadStream = store.createReadStream({ key })
-        // cacheReadStream.on('error', handleError)
-        return cacheReadStream.pipe(passthrough)
-      }
-      debug(`miss (${key})`)
-      const readStream = fn(...args)
-      // TODO: do we need to manually forward errors to passthrough?
-
-      // TODO: cache to store
-      const cacheWriteStream = store.createWriteStream({ key }, (_err) => {
-        if (_err) return handleError(_err)
-      })
-
-      readStream.pipe(cacheWriteStream)
-      readStream.pipe(passthrough)
-    })
-
-    return passthrough
-  }
-}
-*/
