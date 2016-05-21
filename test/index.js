@@ -11,7 +11,7 @@ rimraf.sync(tmpPath)
 const blobStore = initBlobStore(tmpPath)
 const memoize = initMemoize(blobStore)
 
-test((t) => {
+test('simple cache miss, cache hit', (t) => {
   let callCount = 0
   const square = memoize((i) => {
     callCount++
@@ -26,7 +26,7 @@ test((t) => {
     })
     .then(() => square(2))
     .then((val) => {
-      t.equal(val, 4, 'val = 4')
+      t.equal(val, 4, 'returns cached result')
     })
     .then(() => {
       t.end()

@@ -34,3 +34,4 @@ lib/
 .envrc
 .env
 data/
+.tmp

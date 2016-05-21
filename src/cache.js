@@ -1,5 +1,4 @@
 /* eslint-disable no-cond-assign */
-/* eslint-disable no-console */
 import { PassThrough } from 'stream'
 import initDebug from 'debug'
 
@@ -28,8 +27,8 @@ const parseMetadata = (stream) => new Promise((resolve) => {
         }
         // now the body of the message can be read from the stream.
         const metadata = JSON.parse(header)
-        if (header.createdAt) {
-          header.createdAt = new Date(header.createdAt)
+        if (metadata.createdAt) {
+          metadata.createdAt = new Date(metadata.createdAt)
         }
         return resolve({ metadata, stream })
       }
