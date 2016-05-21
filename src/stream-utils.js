@@ -26,9 +26,14 @@ class BufferStream extends Readable {
   }
 */
 
+// Backward compatibility with node < v6
+export const bufferFrom = Buffer.from
+  ? Buffer.from
+  : (...args) => new Buffer(...args)
+
 export const bufferToStream = (buf) => new BufferStream(buf)
 
-export const stringToStream = (str) => bufferToStream(Buffer.from(str))
+export const stringToStream = (str) => bufferToStream(bufferFrom(str))
 
 export const streamToBuffer = (stream) => new Promise((resolve, reject) => {
   const chunks = []

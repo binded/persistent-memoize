@@ -2,7 +2,7 @@
 import { PassThrough } from 'stream'
 import initDebug from 'debug'
 
-import { stringToStream, toStream, fromStream } from './stream-utils'
+import { stringToStream, toStream, fromStream, bufferFrom } from './stream-utils'
 
 const debug = initDebug('persistent-memoize')
 
@@ -21,7 +21,7 @@ const parseMetadata = (stream) => new Promise((resolve) => {
         const split = str.split(/\n\n/)
         header += split.shift()
         const remaining = split.join('\n\n')
-        const buf = Buffer.from(remaining, 'utf8')
+        const buf = bufferFrom(remaining, 'utf8')
         if (buf.length) {
           stream.unshift(buf)
         }
