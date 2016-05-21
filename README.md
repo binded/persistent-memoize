@@ -45,11 +45,11 @@ Used when generating the key used by the blob store. See Key Generation.
 **opts.version** (defaults to the `npm_package_version` environment
 variable which is automatically set when running script through npm)
 
-Used when generating the key used by the blob store. We suggestion
-setting version to `'latest'` or `null` if you decide to version
-memoized functions individually. This prevents uselessly invalidating
-the cache when the app version is bumped but the individual memoized
-functions haven't changed. See Key Generation.
+Used when generating the key used by the blob store. We suggest
+setting the version to `'latest'` or `null` if you chose to version
+functions individually. This prevents needlessly invalidating
+the cache when the app version is bumped but the individual function
+versions haven't changed. See Key Generation.
 
 **opts.maxAge** (defaults to `Infinity`)
 
