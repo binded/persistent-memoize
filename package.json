@@ -2,7 +2,7 @@
   "name": "persistent-memoize",
   "version": "0.0.1",
   "description": "Persistently memoize / cache functions to the local file system, Amazon S3, Google Drive, Google Cloud, PostgreSQL, etc.",
-  "private": true,
+  "private": false,
   "main": "lib/index.js",
   "engines": {
     "node": "6",
