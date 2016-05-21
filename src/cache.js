@@ -73,14 +73,12 @@ export default (store) => {
     new Promise((resolve, reject) => {
       const { type, bodyStream } = toStream(value)
 
-      debug('type', type)
-      debug('value', value)
+      debug('data type', type)
       let resolveValue = value
 
       const writeStream = store.createWriteStream({ key }, (err) => {
-        debug('blob write stream cb called')
-        debug('err', err)
         if (err) return reject(err)
+        debug('wrote body')
         resolve(resolveValue)
       })
 
