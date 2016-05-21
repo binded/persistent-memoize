@@ -42,7 +42,7 @@ export const streamToBuffer = (stream) => new Promise((resolve, reject) => {
 })
 
 export const streamToString = (stream) => (
-    streamToBuffer(stream).then((buf) => buf.toString())
+  streamToBuffer(stream).then((buf) => buf.toString())
 )
 
 // Returns { type: '', stream: '' }
@@ -59,7 +59,7 @@ export const toStream = (val) => {
 
 export const fromStream = (type, stream) => {
   if (type === 'stream') {
-    return stream
+    return Promise.resolve(stream)
   }
   if (type === 'buffer') {
     return streamToBuffer(stream)

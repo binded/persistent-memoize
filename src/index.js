@@ -70,7 +70,8 @@ export default (store, {
             }
             // TODO: cache result in "parallel"?
             // There could be an option for that?
-            return fn(...args)
+            return Promise.resolve()
+              .then(() => fn(...args))
               .then((result) => cache.set(key, result))
           }
           debug(`${key} cache hit`)

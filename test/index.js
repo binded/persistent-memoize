@@ -4,6 +4,8 @@ import initBlobStore from 'fs-blob-store'
 import rimraf from 'rimraf'
 import fs from 'fs'
 import { join } from 'path'
+import isStream from 'is-stream'
+import * as streamUtils from '../src/stream-utils'
 
 const tmpPath = join(__dirname, '.tmp')
 // Clean tmp dir
@@ -88,6 +90,36 @@ test('simple cache miss, cache hit with promise that returns buffer', (t) => {
     .then(() => readPoem())
     .then((val) => {
       t.ok(Buffer.isBuffer(val), 'is a buffer')
+      t.equal(val.toString(), poemData, 'returns cached result')
+    })
+    .then(() => t.end())
+    .catch((err) => t.fail(err))
+})
+
+test('promise returning a stream', (t) => {
+  let callCount = 0
+  const readPoemStream = memoize(() => {
+    callCount++
+    if (callCount === 1) {
+      return fs.createReadStream(poemPath)
+    }
+    return Promise.resolve('oopsie')
+  }, 'test-4')
+
+  readPoemStream()
+    .then((readStream) => {
+      t.ok(isStream(readStream, 'returns a stream'))
+      return streamUtils.streamToString(readStream)
+    })
+    .then((val) => {
+      t.equal(val.toString(), poemData, 'poem data')
+    })
+    .then(() => readPoemStream())
+    .then((readStream) => {
+      t.ok(isStream(readStream, 'returns a stream'))
+      return streamUtils.streamToString(readStream)
+    })
+    .then((val) => {
       t.equal(val.toString(), poemData, 'returns cached result')
     })
     .then(() => t.end())
