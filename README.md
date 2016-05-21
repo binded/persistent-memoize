@@ -4,6 +4,13 @@
 functions to the local file system, Amazon S3, Google Drive, Google
 Cloud, PostgreSQL, Bittorrent, etc.
 
+Designed to work across different processes or restarts. Functions must
+be uniquely identified by the user through a `name` argument. Also uses
+smart heuristics to further identify like using the `package.json`'s
+`name` and `version` properties.
+
+Supports optional cache expiry through a `maxAge` argument.
+
 Any
 [abstract-blob-store](https://github.com/maxogden/abstract-blob-store)
 compatible store is supported.
