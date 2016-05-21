@@ -1,5 +1,3 @@
-WIP
-
 # persistent-memoize
 
 [![Build Status](https://travis-ci.org/blockai/persistent-memoize.svg?branch=master)](https://travis-ci.org/blockai/persistent-memoize)
