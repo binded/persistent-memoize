@@ -2,13 +2,13 @@
 
 [Memoize](https://en.wikipedia.org/wiki/Memoization) / cache arbitrary
 functions to the local file system, Amazon S3, Google Drive, Google
-Cloud, PostgreSQL, etc.
+Cloud, PostgreSQL, Bittorrent, etc.
 
 Any
 [abstract-blob-store](https://github.com/maxogden/abstract-blob-store)
 compatible store is supported.
 
-[![blob-store-compatible](badge.png)](https://github.com/maxogden/abstract-blob-store)
+[![blob-store-compatible](https://raw.githubusercontent.com/maxogden/abstract-blob-store/master/badge.png)](https://github.com/maxogden/abstract-blob-store)
 
 ## Install
 
