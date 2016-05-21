@@ -1,7 +1,6 @@
 {
-  "presets": ["es2015-node6"],
+  "presets": ["es2015"],
   "plugins": [
-    "transform-es2015-destructuring",
     "transform-object-rest-spread"
   ]
 }
