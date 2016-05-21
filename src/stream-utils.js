@@ -27,9 +27,15 @@ class BufferStream extends Readable {
 */
 
 // Backward compatibility with node < v6
-export const bufferFrom = Buffer.from
-  ? Buffer.from
-  : (...args) => new Buffer(...args)
+export const bufferFrom = (...args) => {
+  let ret
+  try {
+    ret = Buffer.from(...args)
+  } catch (err) {
+    ret = new Buffer(...args)
+  }
+  return ret
+}
 
 export const bufferToStream = (buf) => new BufferStream(buf)
 
