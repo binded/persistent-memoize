@@ -45,7 +45,6 @@ memoized functions individually. This prevents uselessly invalidating
 the cache when the app version is bumped but the individual memoized
 functions haven't changed. See Key Generation.
 
-
 **opts.maxAge** (defaults to `Infinity`)
 
 Specifies after how long (in milliseconds since it was last updated) a
@@ -56,6 +55,11 @@ cached value is considered stale/expired. Can be overriden through
 
 Returns a memoized version of `fn`. If `fn` takes a callback, use
 `memoize.callback(fn, name [, opts])` or `memoize(fn, name, { cb: true })`.
+
+**opts.disable** (defaults to `false`)
+
+Can be used to completely disable memoization. This can be useful for
+debugging.
 
 **fn**
 
