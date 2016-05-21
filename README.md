@@ -1,5 +1,7 @@
 # persistent-memoize
 
+WIP
+
 [Memoize](https://en.wikipedia.org/wiki/Memoization) / cache arbitrary
 functions to the local file system, Amazon S3, Google Drive, Google
 Cloud, PostgreSQL, Bittorrent, etc.
