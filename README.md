@@ -2,6 +2,8 @@ WIP
 
 # persistent-memoize
 
+[![Build Status](https://travis-ci.org/blockai/persistent-memoize.svg?branch=master)](https://travis-ci.org/blockai/persistent-memoize)
+
 [Memoize](https://en.wikipedia.org/wiki/Memoization) / cache arbitrary
 functions to the local file system, Amazon S3, Google Drive, Google
 Cloud, PostgreSQL, Bittorrent, etc.
