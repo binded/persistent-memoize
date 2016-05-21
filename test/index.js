@@ -126,3 +126,22 @@ test('promise returning a stream', (t) => {
     .catch((err) => t.fail(err))
 })
 
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+test('maxAge', (t) => {
+  let callCount = 0
+  const someFn = memoize(() => {
+    callCount++
+    return `callCount: ${callCount}`
+  }, 'test-5', { maxAge: 300 })
+
+  return someFn()
+    .then((str) => t.equal(str, 'callCount: 1'))
+    .then(() => someFn())
+    .then((str) => t.equal(str, 'callCount: 1'))
+    .then(() => timeout(400))
+    .then(() => someFn())
+    .then((str) => t.equal(str, 'callCount: 2'))
+    .then(() => someFn())
+    .then((str) => t.equal(str, 'callCount: 2'))
+})

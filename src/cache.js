@@ -59,8 +59,10 @@ export default (store) => {
       // do something with metadata
       parseMetadata(cacheReadStream).then(({ metadata, stream }) => (
         fromStream(metadata.type, stream).then((value) => {
+          const expired = isExpired(metadata.createdAt, maxAge)
           resolve({
-            expired: isExpired(metadata.createdAt, maxAge),
+            miss: expired,
+            expired,
             metadata,
             value,
           })

@@ -11,8 +11,7 @@ smart heuristics to further identify like using the `package.json`'s
 
 Supports optional cache expiry through a `maxAge` argument.
 
-Supports promise and stream returning functions as well as callback
-style functions.
+Supports promise and stream returning functions.
 
 Any
 [abstract-blob-store](https://github.com/maxogden/abstract-blob-store)
@@ -57,9 +56,6 @@ cached value is considered stale/expired. Can be overriden through
 `memoize()` options.
 
 ### memoize(fn, name [, opts])
-
-Returns a memoized version of `fn`. If `fn` takes a callback, use
-`memoize.callback(fn, name [, opts])` or `memoize(fn, name, { cb: true })`.
 
 **opts.disable** (defaults to `false`)
 
@@ -184,22 +180,16 @@ const memoizedFetch = memoize((...args) => (
     })
 ), 'memoizedFetch')
 
-// Functions are versioned individually
+// Functions can be versioned individually
 const memoizeNoVersion = persistentMemoize(store, { version: null })
-
-// Cache invalidated only when version is manually changed
-const memoizedCb = memoizeNoVersion((cb) => {
-  cb()
-}, 'memoizedCb', { cb :true, version: 1 })
-
-// Alternative syntax
-const memoizedCb2 = memoize.cb((cb) => { cb() }, 'memoizedCb/v2')
 
 // Sync function. Be careful when memoizing a sync function as it
 // doesn't create a drop in replacement because the memoized will
 // version be async and returns a promise.
-const expensiveComputation = memoize((i) => {
+const expensiveComputation = memoizeNoVersion((i) => {
   // some expensive computation :)
   return i + 1
-}, 'expensive-computation')
+}, 'expensive-computation', { version: 'v1' })
 ```
+
+See [./test](./test) for more examples.
