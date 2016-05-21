@@ -11,6 +11,9 @@ smart heuristics to further identify like using the `package.json`'s
 
 Supports optional cache expiry through a `maxAge` argument.
 
+Supports promise and stream returning functions as well as callback
+style functions.
+
 Any
 [abstract-blob-store](https://github.com/maxogden/abstract-blob-store)
 compatible store is supported.
@@ -33,11 +36,13 @@ Returns a **memoize()** function.
 
 **opts** (optional) configuration object
 
-**opts.name** (defaults to the `name` field of your `package.json`)
+**opts.name** (defaults to the `npm_package_name` environment variable
+which is automatically set when running script through npm)
 
 Used when generating the key used by the blob store. See Key Generation.
 
-**opts.version** (defaults to the `version` field of your `package.json`)
+**opts.version** (defaults to the `npm_package_version` environment
+variable which is automatically set when running script through npm)
 
 Used when generating the key used by the blob store. We suggestion
 setting version to `'latest'` or `null` if you decide to version

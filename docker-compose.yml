@@ -1,0 +1,12 @@
+fakes3:
+  image: olalond3/fakes3
+  ports:
+    - "4567:4567"
+  volumes:
+    - ./data:/fakes3/data
+
+services:
+  image: alpine:3.2
+  links:
+    - fakes3
+  command: /bin/true

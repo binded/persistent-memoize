@@ -1,0 +1,6 @@
+src/
+test/
+.envrc
+.eslintrc
+.babelrc
+docker-compose.yml

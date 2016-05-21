@@ -1,0 +1,42 @@
+{
+  "name": "persistent-memoize",
+  "version": "0.0.0",
+  "description": "Persistently memoize / cache functions to the local file system, Amazon S3, Google Drive, Google Cloud, PostgreSQL, etc.",
+  "private": true,
+  "main": "lib/index.js",
+  "engines": {
+    "node": "6",
+    "npm": "3"
+  },
+  "scripts": {
+    "build": "babel ./src --out-dir ./lib --copy-files",
+    "dev": "nodemon --exec npm -- run test:quick",
+    "docker": "docker-compose up -d services",
+    "lint": "eslint src/",
+    "postinstall": "npm run build",
+    "test": "npm run lint && npm run test:quick",
+    "test:quick": "NODE_ENV=test babel-tape-runner test/*.js"
+  },
+  "author": "Olivier Lalonde <olalonde@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "is-stream": "^1.1.0",
+    "json-stable-stringify": "^1.0.1"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.3.14",
+    "babel-cli": "^6.8.0",
+    "babel-eslint": "^6.0.4",
+    "babel-plugin-transform-es2015-destructuring": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-preset-es2015-node6": "^0.2.0",
+    "babel-tape-runner": "^2.0.1",
+    "blue-tape": "^0.2.0",
+    "eslint": "^2.9.0",
+    "eslint-config-airbnb": "^8.0.0",
+    "eslint-plugin-import": "^1.7.0",
+    "fs-blob-store": "^5.2.1",
+    "nodemon": "^1.9.2",
+    "rimraf": "^2.5.2"
+  }
+}
