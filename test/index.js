@@ -6,6 +6,7 @@ import fs from 'fs'
 import { join } from 'path'
 import isStream from 'is-stream'
 import * as streamUtils from '../src/stream-utils'
+import request from 'request'
 
 const tmpPath = join(__dirname, '.tmp')
 // Clean tmp dir
@@ -144,4 +145,38 @@ test('maxAge', (t) => {
     .then((str) => t.equal(str, 'callCount: 2'))
     .then(() => someFn())
     .then((str) => t.equal(str, 'callCount: 2'))
+})
+
+test('issue #1', (t) => {
+  const getBody = (url) => new Promise((resolve, reject) => {
+    request({
+      url,
+      encoding: null,
+    }, (err, res, body) => {
+      if (err) {
+        return reject(err)
+      }
+      resolve(body)
+    })
+  })
+  const memoGetBody = memoize(getBody, 'getHNStory')
+
+  const url = 'https://raw.githubusercontent.com/blockai/persistent-memoize/master/test/poem.txt'
+  let firstBody
+  let secondBody
+  return memoGetBody(url)
+    .then((body) => {
+      firstBody = body
+      // console.log(body)
+    })
+    .then(() => memoGetBody(url))
+    .then((body) => {
+      secondBody = body
+      // console.log(body)
+    })
+    .then(() => {
+      t.ok(Buffer.isBuffer(firstBody))
+      t.ok(Buffer.isBuffer(secondBody))
+      t.deepEqual(firstBody, secondBody)
+    })
 })
