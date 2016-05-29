@@ -159,9 +159,9 @@ test('issue #1', (t) => {
       resolve(body)
     })
   })
-  const memoGetBody = memoize(getBody, 'getHNStory')
+  const memoGetBody = memoize(getBody, 'getBody')
 
-  const url = 'https://raw.githubusercontent.com/blockai/persistent-memoize/master/test/poem.txt'
+  const url = 'https://raw.githubusercontent.com/maxogden/abstract-blob-store/master/badge.png'
   let firstBody
   let secondBody
   return memoGetBody(url)

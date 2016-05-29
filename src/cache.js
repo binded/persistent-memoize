@@ -2,7 +2,7 @@
 import { PassThrough } from 'stream'
 import initDebug from 'debug'
 
-import { stringToStream, toStream, fromStream, bufferFrom } from './stream-utils'
+import { stringToStream, toStream, fromStream } from './stream-utils'
 
 const debug = initDebug('persistent-memoize')
 
@@ -15,15 +15,23 @@ const parseMetadata = (stream) => new Promise((resolve) => {
     let chunk
     while ((chunk = stream.read()) !== null) {
       const str = chunk.toString()
-      if (str.match(/\n\n/)) {
+      const match = str.match(/\n\n/)
+      if (match) {
         stream.removeListener('readable', onReadable)
         // found the header boundary
         const split = str.split(/\n\n/)
         header += split.shift()
+        /*
+        oops, this does not work if the body doesn't contain utf8...
         const remaining = split.join('\n\n')
         const buf = bufferFrom(remaining, 'utf8')
         if (buf.length) {
           stream.unshift(buf)
+        }
+        */
+        const remaining = chunk.slice(match.index + '\n\n'.length)
+        if (remaining.length) {
+          stream.unshift(remaining)
         }
         // now the body of the message can be read from the stream.
         const metadata = JSON.parse(header)
