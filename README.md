@@ -2,6 +2,12 @@
 
 [![Build Status](https://travis-ci.org/blockai/persistent-memoize.svg?branch=master)](https://travis-ci.org/blockai/persistent-memoize)
 
+**DEPRECATION WARNING:** We've decided to deprecate this module in
+favour of [blockai/cloud-cache](https://github.com/blockai/cloud-cache)
+which works mostly the same except it doesn't try to automatically guess
+key names (those heuristics were a bit confusing) and clearly separates
+Promise vs Stream based APIs.
+
 [Memoize](https://en.wikipedia.org/wiki/Memoization) / cache arbitrary
 functions to the local file system, Amazon S3, Google Drive, Google
 Cloud, PostgreSQL, Bittorrent, etc.
